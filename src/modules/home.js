@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Button, Text, View } from 'react-native';
+import CustomButton from '../components/button';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,10 +20,19 @@ export default class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Text>Home Screen</Text>
-        <Button
-          title="Settings"
+        <CustomButton
+          title='Settings'
           onPress={() => {
+            console.log(this.props)
             this.props.navigation.navigate('Setting', {
+              title: 'Hi',
+            })
+          }}
+        />
+        <CustomButton
+          title='Todo'
+          onPress={() => {
+            this.props.navigation.navigate('Todo', {
               title: 'Hi',
             })
           }}
