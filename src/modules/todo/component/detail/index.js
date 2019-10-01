@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { StyleSheet, View, Text, CheckBox } from 'react-native';
+import { connect } from 'react-redux';
+import { StyleSheet, View, Text, CheckBox, Alert } from 'react-native';
+import Button from './../../../../components/button'
 
 const style = StyleSheet.create({
   container: {
@@ -13,20 +15,45 @@ const style = StyleSheet.create({
     flexDirection: 'row'
   }
 })
+
 const TodoDetails = (props) => {
-  const [checked, setChecked] = useState(false);
   const todoData = props.navigation.getParam('todo');
+
+  const deleteTodo = (todo) => {
+    props.dispatch({ type: 'REMOVE_TODO', id: todo.id })
+    Alert.alert('Deleted Succesfully', `${todo.title} was deleted.`,
+      [{ text: 'OK', onPress: () => props.navigation.goBack() }],
+      { cancelable: false }
+    )
+  }
+
+  const updateTodo = (todo) => {
+    props.dispatch({ type: 'UPDATE_TODO', payload: { isCompleted: true }, id: todo.id })
+  }
+
   return (
     <View style={style.container}>
       <Text style={style.description}>{todoData.title}</Text>
       <Text style={style.description}>{todoData.description}</Text>
       <View style={style.checkbox}>
         <CheckBox
-          value={checked}
-          onValueChange={() => setChecked(!checked)}
+          value={todoData.isCompleted}
+          onValueChange={() => updateTodo(todoData)}
+          disabled={todoData.isCompleted}
         />
-        <Text onPress={() => setChecked(!checked)} style={{ marginTop: 5 }}> this is checkbox</Text>
+        <Text style={{ marginTop: 5 }}>Completed</Text>
       </View>
+      <Button
+        title="Delete"
+        onPress={() => {
+          Alert.alert('Confirm', `Do you want to delete ${todoData.title} ?`, [
+            { text: 'Cancel' },
+            { text: 'OK', onPress: () => deleteTodo(todoData) }
+          ],
+            { cancelable: false },
+          );
+        }}
+        style={{ marginTop: 5 }} />
     </View>
   )
 }
@@ -35,4 +62,6 @@ TodoDetails.navigationOptions = {
   title: 'Todo Details',
 }
 
-export default TodoDetails;
+const mapStateToProps = ({ todos }) => ({ todos });
+
+export default connect(mapStateToProps)(TodoDetails);

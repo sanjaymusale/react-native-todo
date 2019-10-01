@@ -23,7 +23,6 @@ export default class HomeScreen extends React.Component {
         <CustomButton
           title='Settings'
           onPress={() => {
-            console.log(this.props)
             this.props.navigation.navigate('Setting', {
               title: 'Hi',
             })

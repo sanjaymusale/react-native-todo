@@ -2,9 +2,11 @@ import React from 'react';
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { withNavigation } from 'react-navigation';
+import { connect } from 'react-redux';
 
 const style = StyleSheet.create({
   container: {
+    flex: 1,
     marginTop: 20,
   },
   title: {
@@ -17,6 +19,10 @@ const style = StyleSheet.create({
     fontSize: 16,
     padding: 10,
     marginTop: 5,
+  },
+  completed: {
+    textDecorationLine: 'line-through',
+    textDecorationStyle: 'solid'
   }
 })
 
@@ -34,11 +40,12 @@ const ListTodo = ({ todos, navigation }) => (
             })
           }}
         >
-          <Text>{index + 1}. {todo.title}</Text>
+          <Text>{index + 1}. <Text style={todo.isCompleted && style.completed}>{todo.title}</Text></Text>
         </TouchableOpacity>
       ))}
     </ScrollView>
   </View>
 )
 
-export default withNavigation(ListTodo);
+const mapStateToProps = ({ todos }) => ({ todos })
+export default connect(mapStateToProps)(withNavigation(ListTodo));

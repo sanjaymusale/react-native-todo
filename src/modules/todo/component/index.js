@@ -1,11 +1,16 @@
 import React from 'react';
-import { StyleSheet, ScrollView, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import uuidv1 from 'uuid/v1';
 import Form from './form';
 import ListTodo from './listing';
 
 const style = StyleSheet.create({
   container: {
     flex: 1
+  },
+  line: {
+    borderTopWidth: 2,
+    borderTopColor: 'grey'
   }
 })
 
@@ -14,16 +19,15 @@ class TodoCreator extends React.Component {
     title: 'Todos',
   }
 
-  state = { todos: [{ title: 'sample', description: 'Sample Descripion about todo' }] }
+  state = { todos: [] }
 
-  onAddNewTodo = (todos) => {
-    this.setState({ todos })
-  }
+  onAddNewTodo = todos => this.setState({ todos })
 
   render() {
     return (
       <View style={style.container}>
         <Form onAddNewTodo={this.onAddNewTodo} />
+        <View style={style.line}></View>
         <ListTodo todos={this.state.todos} />
       </View>
     );

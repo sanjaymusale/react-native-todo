@@ -1,7 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+import uuidv1 from 'uuid/v1';
 import InputField from './../../../../components/inputFIeld';
 import Button from './../../../../components/button';
+import { connect } from 'react-redux';
 
 const style = StyleSheet.create({
   container: {
@@ -23,7 +25,6 @@ class Form extends React.Component {
   state = {
     title: '',
     description: '',
-    data: [],
   }
 
   setData = (field, value) => {
@@ -35,9 +36,9 @@ class Form extends React.Component {
     if (!title || !description) {
       return
     }
-    this.setState({ data: [...this.state.data, { title, description }], title: '', description: '' },
-      () => { this.props.onAddNewTodo(this.state.data) }
-    )
+    const data = { id: uuidv1(), title, description, isCompleted: false }
+    this.props.dispatch({ type: 'ADD_TODO', payload: data });
+    this.setState({ title: '', description: '' })
   }
 
   render() {
@@ -48,11 +49,13 @@ class Form extends React.Component {
         <Text style={style.subTitle} >Title</Text>
         <InputField onChange={(value) => this.setData('title', value)} value={title} />
         <Text style={style.subTitle}>Description</Text>
-        <InputField onChange={(value) => this.setData('description', value)} value={description} />
-        <Button title="submit" onPress={this.onSubmit} />
+        <InputField onChange={(value) => this.setData('description', value)} value={description} multiline={true}
+          numberOfLines={10}
+          style={{ height: 100, textAlignVertical: 'top', }} />
+        <Button title="Submit" onPress={this.onSubmit} />
       </View>
     )
   }
 }
 
-export default Form;
+export default connect()(Form);

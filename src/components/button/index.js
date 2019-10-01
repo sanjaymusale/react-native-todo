@@ -14,10 +14,10 @@ const style = StyleSheet.create({
     color: '#ffffff',
   }
 })
-const CustomButton = ({ title, onPress }) => (
+const CustomButton = ({ title, onPress, style: styles }) => (
   <TouchableHighlight
     onPress={onPress}
-    style={style.customButton}
+    style={[style.customButton, styles]}
   >
     <Text style={style.buttonText}>{title}</Text>
   </TouchableHighlight>
