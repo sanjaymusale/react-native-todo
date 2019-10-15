@@ -23,7 +23,12 @@ const style = StyleSheet.create({
   completed: {
     textDecorationLine: 'line-through',
     textDecorationStyle: 'solid'
-  }
+  },
+  textShadow: {
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 3,
+  },
+
 })
 
 const ListTodo = ({ todos, navigation }) => (
@@ -40,7 +45,7 @@ const ListTodo = ({ todos, navigation }) => (
             })
           }}
         >
-          <Text>{index + 1}. <Text style={todo.isCompleted && style.completed}>{todo.title}</Text></Text>
+          <Text>{index + 1}. <Text style={todo.isCompleted && [style.completed, style.textShadow]}>{todo.title}</Text></Text>
         </TouchableOpacity>
       ))}
     </ScrollView>

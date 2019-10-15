@@ -5,8 +5,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+  card: {
+    margin: 20,
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 0.5 * 5 },
+    shadowOpacity: 0.3,
+    shadowRadius: 0.8 * 5
   },
 });
 
@@ -21,6 +27,9 @@ export default class SettingsScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Text>Settings Screen</Text>
+        <View style={styles.card}>
+          <Text>Sanjay</Text>
+        </View>
         <Button
           title="press Me"
           onPress={() => {

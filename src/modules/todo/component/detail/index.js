@@ -6,14 +6,24 @@ import Button from './../../../../components/button'
 const style = StyleSheet.create({
   container: {
     padding: 10,
-    marginTop: 15,
+    margin: 5,
+    borderWidth: 0.5,
+    borderRadius: 5,
   },
   description: {
     marginBottom: 10
   },
   checkbox: {
+    marginLeft: -5,
     flexDirection: 'row'
-  }
+  },
+  shadowThick: {
+    elevation: 1,
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 1,
+    shadowOpacity: 0.1,
+    zIndex: 1,
+  },
 })
 
 const TodoDetails = (props) => {
@@ -29,10 +39,14 @@ const TodoDetails = (props) => {
 
   const updateTodo = (todo) => {
     props.dispatch({ type: 'UPDATE_TODO', payload: { isCompleted: true }, id: todo.id })
+    Alert.alert('Marked as Completed', `${todo.title} is completed.`,
+      [{ text: 'OK', onPress: () => props.navigation.goBack() }],
+      { cancelable: false }
+    )
   }
 
   return (
-    <View style={style.container}>
+    <View style={[style.container, style.shadowThick]}>
       <Text style={style.description}>{todoData.title}</Text>
       <Text style={style.description}>{todoData.description}</Text>
       <View style={style.checkbox}>
@@ -53,7 +67,7 @@ const TodoDetails = (props) => {
             { cancelable: false },
           );
         }}
-        style={{ marginTop: 5 }} />
+        style={{ marginTop: 10 }} />
     </View>
   )
 }
